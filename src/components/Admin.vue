@@ -1,17 +1,22 @@
 <template>
-    <div id="foo" class="foo">
-        <div v-if="jsonData">
-            <div v-for="data in jsonData" :key="data._id">
-                <h1>{{ data.title }}</h1>
-                <label for="">Title </label><input :id="'title_'+data._id" type="text" v-model="data.title" placeholder="Edit me">
+    <div id="Admin" class="admin container p-4">
+
+        <div v-if="jsonData" class="">
+            <div v-for="data in jsonData" :key="data._id" class="card mt-4">
+                <div class="card-body">
+                    <h2 class="card-title">{{ data.title }}</h2>
+                    <div class="form-group">
+                        <label for="" class="mr-2">Title </label>
+                        <input :id="'title_'+data._id" type="text" v-model="data.title" placeholder="Edit me">
+                    </div>
+                </div>
             </div>
         </div>
         <div v-else><h1>Data not loaded. Check if Apache is running</h1></div>
 
-        <div>
-            <button type="button" v-on:click="addLesson">New Lesson</button>
-            <button type="button" v-on:click="submitForm">Submit</button>
-            <button type="button" v-on:click="getLatestDatabase">Get Latest</button>
+        <div class="mt-4">
+            <button class="btn btn-primary m-1" type="button" v-on:click="addLesson">Add lesson</button>
+            <button class="btn btn-primary m-1" type="button" v-on:click="submitForm">Save all</button>
         </div>
 
     </div>
@@ -96,5 +101,7 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+    .admin {
+        background-color: #333;
+    }
 </style>

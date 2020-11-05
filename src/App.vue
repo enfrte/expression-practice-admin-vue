@@ -2,19 +2,19 @@
   <div id="app">
     <!--<img alt="Vue logo" src="./assets/logo.png">-->
     <!--<HelloWorld msg="Welcome to Your Vue.js App"/>-->
-    <Foo />
+    <Admin />
   </div>
 </template>
 
 <script>
 //import HelloWorld from './components/HelloWorld.vue'
-import Foo from './components/Foo.vue'
+import Admin from './components/Admin.vue'
 
 export default {
   name: 'App',
   components: {
     //HelloWorld, 
-    Foo,
+    Admin,
   }
 }
 </script>
