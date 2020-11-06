@@ -2,9 +2,11 @@
 
 This is the backend for the <insert_language>-expression-practice app - https://github.com/enfrte/finnish-expression-practice 
 
-The UI is in Vue, and it runs locally, using PHP and Apache. Data is saved a json dataset, and the result is meant to update the app's static dataset. 
+The UI is in Vue, and it runs locally, using PHP and Apache. Data is saved to a json dataset, and the result is meant to update the app's static dataset. 
 
 It's tagged with Vue in the title because I'm still evaluating JS frontend frameworks, and I may write another version in another framework for experience. 
+
+The interesting code is here  /expression-practice-admin-vue/src/components/Admin.vue 
 
 ## Project setup
 ```
