@@ -1,44 +1,51 @@
 <template>
     <div id="Admin" class="admin container p-4">
 
+        <div class="menu-container">
+            <div class="menu">
+                <button class="btn btn-success m-1" type="button" v-on:click="addLesson">Add lesson</button>
+                <button class="btn btn-success m-1" type="button" v-on:click="submitForm">Save all</button>
+            </div>
+        </div>
+
         <div v-if="jsonData" class="">
             <div v-for="data in jsonData" :key="data._id" class="card mt-4">
                 <div class="card-body">
                     <div class="form-group row">
-                        <div class="col-sm-10 offset-sm-2">
+                        <div class="col-md-10 offset-sm-2">
                             <h2 class="card-title">{{ data.title }}</h2>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="col-sm-2">Checkbox</div>
-                        <div class="col-sm-10">
+                        <div class="col-md-2">Publish</div>
+                        <div class="col-md-10">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" :id="'inProduction_'+data._id" v-model="data.inProduction">
-                                <label class="form-check-label" for="">Published </label>
+                                <label class="form-check-label" :for="'inProduction_'+data._id">{{data.inProduction ? 'Published' : 'Unpublished'}} </label>
                             </div>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="" class="col-sm-2 col-form-label">Title </label>
-                        <div class="col-sm-10">
+                        <label for="" class="col-md-2 col-form-label">Title </label>
+                        <div class="col-md-10">
                             <input :id="'title_'+data._id" type="text" v-model="data.title" class="form-control" placeholder="Edit me">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="" class="col-sm-2 col-form-label">Slug </label>
-                        <div class="col-sm-10">
+                        <label for="" class="col-md-2 col-form-label">Slug </label>
+                        <div class="col-md-10">
                             <input v-on:keyup="slugCheck" :value="data.slug" :id="'slug_'+data._id" type="text" class="form-control"   placeholder="Slug link">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="" class="col-sm-2 col-form-label">Tutorial </label>
-                        <div class="col-sm-10">
+                        <label for="" class="col-md-2 col-form-label">Tutorial </label>
+                        <div class="col-md-10">
                             <textarea :id="'Tutorial_'+data._id" v-model="data.tutorial" class="form-control textarea-tutorial" placeholder="Markdown supported"></textarea>
                         </div>
                     </div>
                     
                     <div class="form-group row">
-                        <div class="col-sm-10 offset-sm-2">
+                        <div class="col-md-10 offset-sm-2">
                             <button :id="'addQuestion_'+data._id" class="btn btn-primary" type="button" v-on:click="addQuestion">Add question</button>
                         </div>
                     </div>
@@ -47,11 +54,6 @@
             </div>
         </div>
         <div v-else><h3 class="text-warning">Data is loading, or data has not loaded. <br>Check if Apache is running</h3></div>
-
-        <div class="mt-4">
-            <button class="btn btn-primary m-1" type="button" v-on:click="addLesson">Add lesson</button>
-            <button class="btn btn-primary m-1" type="button" v-on:click="submitForm">Save all</button>
-        </div>
 
     </div>
 </template>
@@ -164,6 +166,8 @@
 <style scoped>
     .admin {
         background-color: #333;
+        max-width: 800px;
+        margin-top: 50px; 
     }
 
     .textarea-tutorial-container {
@@ -178,4 +182,19 @@
     .textarea-tutorial {
         height: 400px;
     }
+
+    .menu-container {
+        height: 50px;
+        position: fixed;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+        text-align: center;
+        z-index: 1;
+        max-width: 800px;
+        background-color: whitesmoke;
+    }
+
+
 </style>
