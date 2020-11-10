@@ -34,7 +34,7 @@
                     <div class="form-group row">
                         <label for="" class="col-md-2 col-form-label">Slug </label>
                         <div class="col-md-10">
-                            <input v-on:keyup="slugCheck" :value="data.slug" :id="'slug_'+data._id" type="text" class="form-control"   placeholder="Slug link">
+                            <input v-on:input="slugCheck($event, data)" :value="data.slug" :id="'slug_'+data._id" type="text" class="form-control"   placeholder="Slug link">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -76,20 +76,14 @@
             //console.log(this.jsonData);
         },
         methods: {
-            slugCheck (e) {
-                let slugId = e.target.id
+            slugCheck (e, data) {
                 const slugText = e.target.value
-                slugId = slugId.replace('slug_','')
-                const dataObjIndex = this.jsonData.findIndex((val) => {
-                    return val._id === slugId
-                });
-                //this.jsonData[dataObjIndex].slug = slugText
-                //console.log("dataObj", dataObjIndex); 
+
                 const a = 'àáäâèéëêìíïîòóöôùúüûñçßÿỳýœæŕśńṕẃǵǹḿǘẍźḧ'
                 const b = 'aaaaeeeeiiiioooouuuuncsyyyoarsnpwgnmuxzh'
                 const p = new RegExp(a.split('').join('|'), 'g')
 
-                this.jsonData[dataObjIndex].slug = slugText.toString().toLowerCase()
+                data.slug = slugText.toString().toLowerCase()
                     .replace(/[\s_]+/g, '-')
                     .replace(p, c =>
                     b.charAt(a.indexOf(c)))
@@ -97,7 +91,7 @@
                     .replace(/[^\w-]+/g, '')
                     .replace(/--+/g, '-')
                     .replace(/^-+|-+$/g, '')
-                console.log("jsonData", this.jsonData);
+                //console.log("jsonData", this.jsonData);
             },
             addQuestion() {
                 console.log("addQuestion called");
