@@ -48,17 +48,18 @@
                         </div>
                     </div>
                     <!-- Questions -->
-                    <div v-for="obj in data.questions" :key="obj._id" class="mt-4">
-                        <div class="form-group row">
+                    <div v-for="(question, index) in data.questions" :key="question._id" class="mt-4">
+                        <h4>Question {{ index + 1 }}</h4>
+                        <div v-for="(en, index) in question.en" :key="'en_' + index" class="form-group row">
                             <label class="col-md-2 col-form-label">English </label>
                             <div class="col-md-10">
-                                <input v-model="obj.en" type="text" class="form-control">
+                                <input v-model="question.en[index]" type="text" class="form-control">
                             </div>
-                        </div> 
-                        <div class="form-group row">
+                        </div>
+                        <div v-for="(fi, index) in question.fi" :key="'fi_' + index" class="form-group row">
                             <label class="col-md-2 col-form-label">Finnish </label>
                             <div class="col-md-10">
-                                <input v-model="obj.fi" type="text" class="form-control">
+                                <input v-model="question.fi[index]" type="text" class="form-control">
                             </div>
                         </div>
                     </div>
