@@ -16,6 +16,7 @@
                             <h2 class="card-title">{{ data.title }}</h2>
                         </div>
                     </div>
+                    <!-- Publish -->
                     <div class="form-group row">
                         <div class="col-md-2">Publish</div>
                         <div class="col-md-10">
@@ -25,28 +26,65 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Title -->
                     <div class="form-group row">
-                        <label for="" class="col-md-2 col-form-label">Title </label>
+                        <label class="col-md-2 col-form-label">Title </label>
                         <div class="col-md-10">
                             <input :id="'title_'+data._id" type="text" v-model="data.title" class="form-control" placeholder="Edit me">
                         </div>
                     </div>
+                    <!-- Slug -->
                     <div class="form-group row">
-                        <label for="" class="col-md-2 col-form-label">Slug </label>
+                        <label class="col-md-2 col-form-label">Slug </label>
                         <div class="col-md-10">
                             <input v-on:input="slugCheck($event, data)" :value="data.slug" :id="'slug_'+data._id" type="text" class="form-control"   placeholder="Slug link">
                         </div>
                     </div>
+                    <!-- Tutorial -->
                     <div class="form-group row">
-                        <label for="" class="col-md-2 col-form-label">Tutorial </label>
+                        <label class="col-md-2 col-form-label">Tutorial </label>
                         <div class="col-md-10">
                             <textarea :id="'Tutorial_'+data._id" v-model="data.tutorial" class="form-control textarea-tutorial" placeholder="Markdown supported"></textarea>
                         </div>
                     </div>
-                    
+                    <!-- Questions -->
+                    <div v-for="(question, index) in data.questions" :key="question._id" class="mt-4">
+                            <h4>Question {{ index + 1 }}</h4>
+                            <div v-for="(en, index) in question.en" :key="'en_' + index" class="form-group row">
+                            <label class="col-md-2 col-form-label">English </label>
+                            <div class="col-md-10 input-group">
+                                <input v-model="question.en[index]" type="text" class="form-control">
+                                <span class="input-group-btn"><button class="btn btn-danger delete-btn" type="button">X</button></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-10 offset-md-2">
+                                <button class="btn btn-warning" type="button">Add Translation</button>
+                            </div>
+                        </div>
+                        <div v-for="(fi, index) in question.fi" :key="'fi_' + index" class="form-group row">
+                            <label class="col-md-2 col-form-label">Finnish </label>
+                            <div class="col-md-10 input-group">
+                                <input v-model="question.fi[index]" type="text" class="form-control">
+                                <span class="input-group-btn"><button class="btn btn-danger delete-btn" type="button">X</button></span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-10 offset-md-2">
+                                <button class="btn btn-warning" type="button">Add Translation</button>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-10 offset-md-2">
+                                <button class="btn btn-danger" type="button">Delete question</button>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <!-- Add question button -->
                     <div class="form-group row">
                         <div class="col-md-10 offset-sm-2">
-                            <button :id="'addQuestion_'+data._id" class="btn btn-primary" type="button" v-on:click="addQuestion">Add question</button>
+                            <button :id="'addQuestion_'+data._id" class="btn btn-success" type="button" v-on:click="addQuestion">Add question</button>
                         </div>
                     </div>
                     
@@ -78,7 +116,13 @@
         methods: {
             slugCheck (e, data) {
                 const slugText = e.target.value
-
+                slugId = slugId.replace('slug_','')
+                // Find which object this checkbox belongs to
+                const dataObjIndex = this.jsonData.findIndex((val) => {
+                    return val._id === slugId
+                });
+                //this.jsonData[dataObjIndex].slug = slugText
+                //console.log("dataObj", dataObjIndex); 
                 const a = 'àáäâèéëêìíïîòóöôùúüûñçßÿỳýœæŕśńṕẃǵǹḿǘẍźḧ'
                 const b = 'aaaaeeeeiiiioooouuuuncsyyyoarsnpwgnmuxzh'
                 const p = new RegExp(a.split('').join('|'), 'g')
@@ -94,7 +138,7 @@
                 //console.log("jsonData", this.jsonData);
             },
             addQuestion() {
-                console.log("addQuestion called");
+                console.log("To do: addQuestion()");
             },
             addLesson() {
                 this.jsonData.push(
@@ -190,5 +234,7 @@
         background-color: whitesmoke;
     }
 
-
+    .delete-btn {
+        margin-left: 5px;
+    }
 </style>
