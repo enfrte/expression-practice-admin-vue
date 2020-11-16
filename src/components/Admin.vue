@@ -116,13 +116,7 @@
         methods: {
             slugCheck (e, data) {
                 const slugText = e.target.value
-                slugId = slugId.replace('slug_','')
-                // Find which object this checkbox belongs to
-                const dataObjIndex = this.jsonData.findIndex((val) => {
-                    return val._id === slugId
-                });
-                //this.jsonData[dataObjIndex].slug = slugText
-                //console.log("dataObj", dataObjIndex); 
+    
                 const a = 'àáäâèéëêìíïîòóöôùúüûñçßÿỳýœæŕśńṕẃǵǹḿǘẍźḧ'
                 const b = 'aaaaeeeeiiiioooouuuuncsyyyoarsnpwgnmuxzh'
                 const p = new RegExp(a.split('').join('|'), 'g')
