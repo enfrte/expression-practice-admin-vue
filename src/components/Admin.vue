@@ -9,7 +9,7 @@
         </div>
 
         <div v-if="jsonData" class="">
-            <div v-for="data in jsonData" :key="data._id" class="card mt-4">
+            <div v-for="(data, lesson_index) in jsonData" :key="data._id" class="card mt-4">
                 <div class="card-body">
                     <div class="form-group row">
                         <div class="col-md-10 offset-sm-2">
@@ -37,7 +37,7 @@
                     <div class="form-group row">
                         <label class="col-md-2 col-form-label">Slug </label>
                         <div class="col-md-10">
-                            <input v-on:keyup="slugCheck" :value="data.slug" :id="'slug_'+data._id" type="text" class="form-control"   placeholder="Slug link">
+                            <input v-on:keyup="slugCheck" :value="data.slug" :id="'slug_'+data._id" type="text" class="form-control" placeholder="Slug link">
                         </div>
                     </div>
                     <!-- Tutorial -->
@@ -48,35 +48,36 @@
                         </div>
                     </div>
                     <!-- Questions -->
-                    <div v-for="(question, index) in data.questions" :key="question._id" class="mt-4">
-                            <h4>Question {{ index + 1 }}</h4>
-                            <div v-for="(en, index) in question.en" :key="'en_' + index" class="form-group row">
+                    <div v-for="(question, question_index) in data.questions" :key="question._id" class="mt-4">
+                        <h4>Question {{ question_index + 1 }}</h4>
+                        <div v-for="(en, lang_index) in question.en" :key="'en_' + lang_index" class="form-group row">
                             <label class="col-md-2 col-form-label">English </label>
                             <div class="col-md-10 input-group">
-                                <input v-model="question.en[index]" type="text" class="form-control">
-                                <span class="input-group-btn"><button class="btn btn-danger delete-btn" type="button">X</button></span>
+                                <input v-model="question.en[lang_index]" type="text" class="form-control">
+                                <span class="input-group-btn">
+                                    <button v-on:click="removeQuestionText(lesson_index, question_index, 'en', lang_index)" class="btn btn-danger delete-btn" type="button">X</button></span>
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-md-10 offset-md-2">
-                                <button class="btn btn-warning" type="button">Add Translation</button>
+                                <button v-on:click="addQuestionText(lesson_index, question_index, 'en')" class="btn btn-warning" type="button">Add English Translation</button>
                             </div>
                         </div>
-                        <div v-for="(fi, index) in question.fi" :key="'fi_' + index" class="form-group row">
+                        <div v-for="(fi, lang_index) in question.fi" :key="'fi_' + lang_index" class="form-group row">
                             <label class="col-md-2 col-form-label">Finnish </label>
                             <div class="col-md-10 input-group">
-                                <input v-model="question.fi[index]" type="text" class="form-control">
-                                <span class="input-group-btn"><button class="btn btn-danger delete-btn" type="button">X</button></span>
+                                <input v-model="question.fi[lang_index]" type="text" class="form-control">
+                                <span class="input-group-btn"><button v-on:click="removeQuestionText(lesson_index, question_index, 'fi', lang_index)" class="btn btn-danger delete-btn" type="button">X</button></span>
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-md-10 offset-md-2">
-                                <button class="btn btn-warning" type="button">Add Translation</button>
+                                <button v-on:click="addQuestionText(lesson_index, question_index, 'fi')" class="btn btn-warning" type="button">Add Finnish Translation</button>
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-md-10 offset-md-2">
-                                <button class="btn btn-danger" type="button">Delete question</button>
+                                <button v-on:click="removeQuestion(question._id)" class="btn btn-danger" type="button">Delete question {{ question_index + 1 }}</button>
                             </div>
                         </div>
                     </div>
@@ -114,6 +115,20 @@
             //console.log(this.jsonData);
         },
         methods: {
+            removeQuestion(id) {
+                const filtered = this.jsonData.map(obj => ({
+                    ...obj,
+                    questions: obj.questions.filter(question => question._id !== id)
+                }));
+                this.jsonData = filtered;
+            },
+            removeQuestionText(lesson_index, question_index, lang, lang_index) {
+                this.jsonData[lesson_index].questions[question_index][lang].splice(lang_index, 1);
+            },
+            addQuestionText(lesson_index, question_index, lang) {
+                const next_lang_index = this.jsonData[lesson_index].questions[question_index][lang].length + 1;
+                this.jsonData[lesson_index].questions[question_index][lang].splice(next_lang_index, 1, "");
+            },
             slugCheck (e) {
                 let slugId = e.target.id
                 const slugText = e.target.value
