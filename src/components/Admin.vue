@@ -85,7 +85,7 @@
                     <!-- Add question button -->
                     <div class="form-group row">
                         <div class="col-md-10 offset-sm-2">
-                            <button :id="'addQuestion_'+data._id" class="btn btn-success" type="button" v-on:click="addQuestion">Add question</button>
+                            <button :id="'addQuestion_'+data._id" class="btn btn-success" type="button" v-on:click="addQuestion(lesson_index)">Add question</button>
                         </div>
                     </div>
                     
@@ -153,8 +153,9 @@
                     .replace(/^-+|-+$/g, '')
                 console.log("jsonData", this.jsonData);
             },
-            addQuestion() {
-                console.log("To do: addQuestion()");
+            addQuestion(lesson_index) {
+                const question_index = this.jsonData[lesson_index].questions.length;
+                this.jsonData[lesson_index].questions.splice(question_index, 0, { "en":[""], "fi":[""], "_id": this.generateUUID() });
             },
             addLesson() {
                 this.jsonData.push(
