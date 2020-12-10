@@ -199,8 +199,14 @@
                     return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
                 });
             },
-            getLatestDatabase() {
+            /*getLatestDatabase() {
                 return fetch('http://localhost/expression-practice-admin-vue/backend/latestDatabase.php')
+                    .then(response => response.text())
+                    .then(data => data)
+                    .catch((error) => console.error('Fetch error (is the server connected?):', error));
+            },*/
+            getLatestDatabase() {
+                return fetch('http://localhost/expression-practice-admin-vue/backend/router.php?class=latestDatabase&method=getDb')
                     .then(response => response.text())
                     .then(data => data)
                     .catch((error) => console.error('Fetch error (is the server connected?):', error));
